@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useRef } from "react";
-import './App.css';
 import Canvas from "./Components/Canvas";
 import { usePainter } from "./Hooks/usePainter";
 import Intro from "./Components/Intro";
+import Toolbar from "./Components/Toolbar";
 
 function App() {
   const [dataUrl, setDataUrl] = useState("");
@@ -17,8 +17,9 @@ function App() {
   const toolbarProps = { ...state, ...api, dataUrl, handleDownload };
 
   return (
-    <div className="App">
+    <div>
       <Intro isReady={isReady} init={init}></Intro>
+      <Toolbar {...toolbarProps} />
       <Canvas width={state.currentWidth} canvasRef={canvas} />
     </div>
   );
