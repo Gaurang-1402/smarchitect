@@ -3,11 +3,14 @@ import { useCallback, useRef, useState } from 'react'
 export const usePainter = () => {
 
     const canvas = useRef()
+
+    // initialize pen modes
     const [isReady, setIsReady] = useState(false)
     const [isRegularMode, setIsRegularMode] = useState(true)
     const [isAutoWidth, setIsAutoWidth] = useState(false)
     const [isEraser, setIsEraser] = useState(false)
 
+    // initialize pen stats
     const [currentColor, setCurrentColor] = useState('#000000')
     const [currentWidth, setCurrentWidth] = useState(50)
 
@@ -142,12 +145,12 @@ export const usePainter = () => {
         isRegularPaintMode.current = false;
     }, []);
 
-    const handleColor = (e: any) => {
+    const handleColor = (e) => {
         setCurrentColor(e.currentTarget.value);
         selectedColor.current = e.currentTarget.value;
     };
 
-    const handleWidth = (e: any) => {
+    const handleWidth = (e) => {
         setCurrentWidth(e.currentTarget.value);
         selectedLineWidth.current = e.currentTarget.value;
     };
