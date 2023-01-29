@@ -154,7 +154,27 @@ export const Toolbar = ({
         )}
       </div>
       <div>
-
+        {/* <>
+          {isLoading ? (
+            <button disabled>Loading...</button>
+          ) : (
+            <button className="btn btn--main btn--block" onClick={() => {
+              setIsOpen(!isOpen);
+              if (!isLoading) fetchImages();
+            }}>Open Modal</button>
+          )}
+          {isOpen && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <img src={image} alt={"created image"} />
+                {/* <a href={} download>
+              Download
+            </a> 
+                <button onClick={() => setIsOpen(false)}>Close</button>
+              </div>
+            </div>
+          )}
+        </>*/}
         <button className="btn btn--main btn--block" onClick={() => {
           setIsOpen(!isOpen);
           if (!isLoading) fetchImages();
