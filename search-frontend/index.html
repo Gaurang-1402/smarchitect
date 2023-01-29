@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./assets/Smarchitect.ico" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smarchitect - Search architecture moments with a sketch.</title>
+    <!-- Panelbear -->
+    <script async src="https://cdn.panelbear.com/analytics.js?site=CTIl4USpgPF"></script>
+    <script>
+        window.panelbear = window.panelbear || function() { (window.panelbear.q = window.panelbear.q || []).push(arguments); };
+        panelbear('config', { site: 'CTIl4USpgPF' });
+    </script>
+  </head>
+  <body id="body" class="flex items-center px-2.5 h-full 2xl:flex-row">
+    <div id="sketch-interface" class="flex-col justify-center mx-auto lg:w-4/5 xl:w-3/4 2xl:w-2/3">
+        <p class="font-normal text-center mb-1 md:mb-0"><img class="inline object-contain h-5 px-2" src='./assets/Smarchitect.ico'><b>Smarchitect</b> - Search architecture moments with a sketch.</p>
+        <button id="upload-button" class="font-light text-xs w-full mb-2.5 hover:text-red-300">(or, <u class="underline-offset-2">upload</u> an image file)</button>
+        <canvas id="canvas" class="w-full max-h-full border-2 border-grey-50 shadow-sm border-solid rounded-lg mb-3 bg-gray-50"></canvas>
+        <form id="dropzone" class="hidden flex items-center justify-center place-self-center max-h-full mt-5 md:mt-6 mb-4 md:mb-2">
+            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full max-h-full aspect-video border-2 border-grey-50 shadow-sm border-solid rounded-lg mb-3 bg-gray-50 cursor-pointer hover:bg-gray-100">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg aria-hidden="true" class="w-10 h-10 mb-3 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                    <p class="mb-2 text-sm text-red-300">Click to upload, or drag and drop</p>
+                    <p class="text-xs text-zinc-500">PNG, JPG or JFIF</p>
+                </div>
+                <input id="dropzone-file" type="file" class="hidden" />
+            </label>
+        </form>
+        <img id="uploaded-image" class="hidden mx-auto max-h-[90vh] w-2/3 py-6 rounded-sm"></img>
+        <button id="sketch-button" class="hidden w-full font-light hover:text-sky-400">or, go back to <u class="underline-offset-2">sketch</u></button>
+        <div id="controls" class="w-full flex flex-row justify-between px-2.5">
+            <div id="colors" class="grid grid-rows-2 grid-cols-5 gap-1 md:gap-2 sm:gap justify-self-start">
+                <button id="black" class="bg-black setting"></button>
+                <button id="amber" class="bg-amber-900 setting"></button>
+                <button id="neutral" class="bg-neutral-500 setting"></button>
+                <button id="emerald" class="bg-emerald-700 setting"></button>
+                <button id="blue" class="bg-blue-600 setting"></button>
+                <button id="white" class="bg-white setting"></button>
+                <button id="orange" class="bg-orange-600 setting"></button>
+                <button id="gray" class="bg-gray-300 setting"></button>
+                <button id="lime" class="bg-lime-400 setting"></button>
+                <button id="cyan" class="bg-cyan-400 setting"></button>
+            </div>
+            <div class="py-4 hidden md:flex flex-col">
+                <button id="search-button">
+                    <div class="bottom-1 border border-gray-500 rounded-lg" />
+                    <div class="relative bottom-1 font-lg xl:text-2xl font-bold leading-none tracking-wider py-4 px-12 lx:px-14 bg-white border border-gray-500 rounded-lg transform hover:translate-y-1 transition duration-100 ease-in-out">Search!</div>
+                </button>
+            </div>
+            <div id="settings" class="grid grid-rows-2 grid-cols-4 md:grid-cols-5 gap-1 md:gap-2 justify-self-end">
+                <div class="hidden md:flex"></div>
+                <button id="small" class="setting size">
+                    <img src="./assets/small.svg" alt="small">
+                </button>
+                <button id="medium" class="setting size">
+                    <img src="./assets/medium.svg" alt="medium">
+                </button>
+                <button id="big" class="setting size">
+                    <img src="./assets/big.svg" alt="big">
+                </button>
+                <button id="clear" class="setting">
+                <img src="./assets/clear.svg" alt="clear">
+                </button>
+                <div class="hidden md:flex"></div>
+                <button id="pen" class="setting tool">
+                <img src="./assets/pen.svg" alt="pen">
+                </button>
+                <button id="path" class="setting tool">
+                    <img src="./assets/path.svg" alt="path">
+                </button>
+                <button id="polygon" class="setting tool">
+                    <img src="./assets/polygon.svg" alt="polygon">
+                </button>
+                <button id="rect" class="setting tool">
+                    <img src="./assets/square.svg" alt="square">
+                </button>
+            </div>
+        </div>
+        <div id="mobile-search" class="flex flex-col py-8 md:hidden">
+            <button id="search-button">
+                <div class="bottom-1 border bg-grey-200 border-gray-500 rounded-lg" />
+                <div class="relative bottom-1 text-lg font-bold leading-none tracking-wider py-3 px-12 bg-white border border-gray-500 rounded-lg transform hover:translate-y-1 transition duration-100 ease-in-out">Search!</div>
+            </button>
+        </div>
+    </div>
+    </div>
+    <div id="gallery" class="hidden w-1/3 ml-3 pl-3 pr-2 py-4 right-0 h-full place-self-end overflow-y-scroll border-1 border-grey-50 shadow-xl">
+        <div id="gallery-images" class="grid grid-cols-1 gap-y-2 gap-x-2 grid-cols-2">
+        </div>
+    </div>
+    <script type="module" src="./js/canvas.js"></script>
+    <script type="module" src="./js/upload.js"></script>
+</body>
+</html>
