@@ -82,6 +82,24 @@ header {
 
 }
 
+.right-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3);
+  overflow-y: scroll;
+}
+
+.right-drawer img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
 header.hidden {
   animation: fadeOut 1s ease-in-out forwards;
   pointer-events: none;

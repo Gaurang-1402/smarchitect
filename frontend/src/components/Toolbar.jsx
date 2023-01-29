@@ -5,10 +5,10 @@ import {
   faPaintBrush,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import { useState } from "react";
 import { BrushPreview } from "./BrushPreview";
 
-export const Toolbar: React.FC<any> = ({
+export const Toolbar = ({
   currentWidth,
   currentColor,
   handleDownload,
@@ -25,7 +25,11 @@ export const Toolbar: React.FC<any> = ({
   isRegularMode,
   isAutoWidth,
   isEraser,
+
+  fetchImages
 }) => {
+
+
   return (
     <aside>
       <div>
@@ -52,9 +56,8 @@ export const Toolbar: React.FC<any> = ({
         <div className="tool-grid tool-section tool-section--lrg">
           <div>
             <button
-              className={`btn btn--tool ${
-                isRegularMode && !isEraser ? "btn--active" : ""
-              }`}
+              className={`btn btn--tool ${isRegularMode && !isEraser ? "btn--active" : ""
+                }`}
               onClick={handleRegularMode}
             >
               <FontAwesomeIcon icon={faPaintBrush} />
@@ -62,9 +65,8 @@ export const Toolbar: React.FC<any> = ({
           </div>
           <div>
             <button
-              className={`btn btn--tool ${
-                !isRegularMode ? "btn--dream-active" : ""
-              }`}
+              className={`btn btn--tool ${!isRegularMode ? "btn--dream-active" : ""
+                }`}
               onClick={handleSpecialMode}
             >
               <FontAwesomeIcon icon={faMagic} />
@@ -72,9 +74,8 @@ export const Toolbar: React.FC<any> = ({
           </div>
           <div>
             <button
-              className={`btn btn--tool ${
-                isEraser ? "btn--eraser-active" : ""
-              }`}
+              className={`btn btn--tool ${isEraser ? "btn--eraser-active" : ""
+                }`}
               onClick={handleEraserMode}
             >
               <FontAwesomeIcon icon={faEraser} />
@@ -91,9 +92,8 @@ export const Toolbar: React.FC<any> = ({
             />{" "}
             <label
               htmlFor="tool-autowidth"
-              className={`btn btn--tool ${
-                isAutoWidth ? "btn--width-active" : ""
-              }`}
+              className={`btn btn--tool ${isAutoWidth ? "btn--width-active" : ""
+                }`}
             >
               <FontAwesomeIcon icon={faArrowsAltH} />
             </label>
@@ -150,6 +150,7 @@ export const Toolbar: React.FC<any> = ({
         )}
       </div>
       <div>
+        <button className="btn btn--main btn--block" onClick={fetchImages}>Fetch Images</button>
         <a
           className="btn btn--main btn--block"
           download="image.png"
@@ -158,6 +159,7 @@ export const Toolbar: React.FC<any> = ({
         >
           Save Image
         </a>
+
         <button className="btn btn--block" onClick={handleClear}>
           Clear
         </button>
@@ -165,3 +167,5 @@ export const Toolbar: React.FC<any> = ({
     </aside>
   );
 };
+
+
