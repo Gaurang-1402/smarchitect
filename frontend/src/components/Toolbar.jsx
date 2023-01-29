@@ -25,7 +25,11 @@ export const Toolbar = ({
   isRegularMode,
   isAutoWidth,
   isEraser,
-
+  setIsLoading,
+  isLoading,
+  isOpen,
+  setIsOpen,
+  image,
   fetchImages
 }) => {
 
@@ -150,7 +154,24 @@ export const Toolbar = ({
         )}
       </div>
       <div>
-        <button className="btn btn--main btn--block" onClick={fetchImages}>Fetch Images</button>
+
+        <button className="btn btn--main btn--block" onClick={() => {
+          setIsOpen(!isOpen);
+          if (!isLoading) fetchImages();
+        }}>
+          {isOpen ? 'Close' : 'Open'} Drawer
+        </button>
+        {isOpen && (
+          <div className="image-drawer">
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              // <img src=${`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==`} alt="Red dot" />
+              <img src={image} alt={"created image"} />
+            )}
+          </div>
+        )}
+        {/* <button className="btn btn--main btn--block" onClick={fetchImages}>Fetch Images</button> */}
         <a
           className="btn btn--main btn--block"
           download="image.png"
