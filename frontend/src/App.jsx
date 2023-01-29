@@ -24,18 +24,29 @@ const App = () => {
 
     console.log(canvasUrl)
     if (dropzoneImages.length > 0) {
-      console.log("dropzoneImages[0]", dropzoneImages[0].base64)
+      // console.log("dropzoneImages[0]", dropzoneImages[0].base64)
 
     }
-
-    const url = "http://127.0.0.1:7860/sdapi/v1/txt2img";
+    // http://127.0.0.1:7860/sdapi/v1/txt2img
+    const url = "http://127.0.0.1:7860/sdapi/v1/img2img";
     // 'http://172.28.169.136:5000/sketch'
+
+    const initImages = [
+      canvasUrl
+    ]
+    console.log("initImages", initImages
+    )
     const payload = {
-      "init_images": [
-        dropzoneImages.length > 0 ? dropzoneImages[0].base64 : canvasUrl
-      ],
-      "mask": canvasUrl,
-      "prompt": "architecture hallway",
+      "init_images": initImages,
+      "resize_mode": 0,
+      "denoising_strength": 0.75,
+      "mask_blur": 4,
+      "inpainting_fill": 0,
+      "inpaint_full_res": true,
+      "inpaint_full_res_padding": 0,
+      "inpainting_mask_invert": 0,
+      "initial_noise_multiplier": 0,
+      "prompt": "architecture",
       "styles": [
         "concrete and metal",
         "architecture design",
@@ -47,17 +58,31 @@ const App = () => {
       "seed": -1,
       "subseed": -1,
       "subseed_strength": 0,
+      "seed_resize_from_h": -1,
+      "seed_resize_from_w": -1,
       "batch_size": 1,
       "n_iter": 1,
       "steps": 50,
       "cfg_scale": 7,
       "width": 512,
       "height": 512,
-      "include_init_images": true,
+      "restore_faces": false,
+      "tiling": false,
+      "negative_prompt": "string",
+      "eta": 0,
+      "s_churn": 0,
+      "s_tmax": 0,
+      "s_tmin": 0,
+      "s_noise": 1,
+      "override_settings": {},
+      "override_settings_restore_afterwards": true,
+      "script_args": [],
+      "sampler_index": "Euler",
+      "include_init_images": false
     }
     try {
       // const data = await axios.post(url, { search_image: dataUrl });
-      const { data } = await axios.post(url, { json: payload });
+      const { data } = await axios.post(url, payload);
       console.log(data)
 
       for (var i = 0; i < data.images.length; i++) {
