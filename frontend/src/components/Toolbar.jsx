@@ -34,7 +34,9 @@ export const Toolbar = ({
   fetchImages,
   thumbs,
   getRootProps,
-  getInputProps
+  getInputProps,
+  inputValue,
+  handleChange
 }) => {
 
 
@@ -116,7 +118,7 @@ export const Toolbar = ({
             </div>
             <div className="tool-section">
               <input
-                defaultValue="50"
+                defaultValue="10"
                 type="range"
                 min="10"
                 max="90"
@@ -159,6 +161,21 @@ export const Toolbar = ({
       </div>
       <div>
 
+        <input
+          type="text"
+          placeholder="Enter your input here"
+          value={inputValue}
+          onChange={handleChange}
+          style={{
+            fontSize: '20px',
+            padding: '12px',
+            borderRadius: '4px',
+            border: '2px solid #ffa600',
+            boxShadow: '0px 0px 5px #ffa600',
+            width: '100%',
+            margin: '16px auto',
+          }}
+        />
         <DropzoneComponent thumbs={thumbs} getRootProps={getRootProps} getInputProps={getInputProps}></DropzoneComponent>
 
         {/* <>
@@ -191,7 +208,7 @@ export const Toolbar = ({
         {isOpen && (
           <div className="image-drawer">
             {isLoading ? (
-              <div>Loading...</div>
+              <div className="loading-text">Loading...</div>
             ) : (
               // <img src=${`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==`} alt="Red dot" />
               <img src={image} alt={"created image"} />
