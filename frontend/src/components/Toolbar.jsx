@@ -39,7 +39,7 @@ export const Toolbar = ({
 
 
   return (
-    <aside>
+    <aside >
       <div>
         <BrushPreview currentWidth={currentWidth} currentColor={currentColor} />
         <div className="tool-section tool-section--lrg">
@@ -186,7 +186,7 @@ export const Toolbar = ({
           setIsOpen(!isOpen);
           if (!isLoading) fetchImages();
         }}>
-          {isOpen ? 'Close' : 'Open'} Drawer
+          {isOpen ? 'Reset' : 'Generate'}
         </button>
         {isOpen && (
           <div className="image-drawer">
@@ -205,7 +205,7 @@ export const Toolbar = ({
           onClick={handleDownload}
           href={dataUrl}
         >
-          Save Image
+          Save Canvas
         </a>
 
         <button className="btn btn--block" onClick={handleClear}>

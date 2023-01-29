@@ -50,10 +50,14 @@ input[type="range"] {
 }
 
 aside {
-  flex-basis: 400px;
-  background-color: #f1f1f1;
-  padding: 1.2em;
+  flex-basis: 350px;
+  background-color: #FCE3CF;
+  border-radius: 30px; /* sets the border radius */  padding: 1.2em;
   display: flex;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  margin-left: 2rem;
+
   flex-direction: column;
   overflow: auto;
 }
@@ -213,9 +217,9 @@ header a:active {
 
 h1 {
   font-weight: 400;
-  font-family: "Finger Paint";
-  font-size: 8rem;
-  letter-spacing: -0.3rem;
+  /* font-family: "Finger Paint"; */
+  font-size: 4rem;
+  /* letter-spacing: -0.3rem; */
   margin: 0 0 3rem;
 
 }
@@ -227,13 +231,10 @@ h1 {
   margin-bottom: 30px;
   font-size: 1.25rem;
   text-align: center;
-  background-color: transparent;
   outline: none;
-  border: none;
+  background: "#89BFC7";
   cursor: pointer;
   border-radius: 3rem;
-  animation: colorShift 13s ease infinite forwards;
-  box-shadow: 0 0px 15px currentColor;
   margin-bottom: 3rem;
   display: inline-flex;
   text-decoration: none;
@@ -414,13 +415,17 @@ h1 {
 }
 
 .btn--main {
-  background-color: hsl(211, 100%, 75%);
+  background-color: #89BFC7;
   margin-bottom: 0.75rem;
+  font-size: 20px;
+  border-radius: 30px;
+  font-weight: bold;
 }
 
 .btn--block {
   display: flex;
   width: 100%;
+  justify-content: center;
 }
 
 .btn--tool {
@@ -462,10 +467,16 @@ input[type="checkbox"] {
 }
 
 .tool-section {
+  /* center the content */
+
   padding-bottom: 0.5rem;
 }
 
 .tool-section--lrg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding-bottom: 1rem;
 }
 
@@ -498,4 +509,27 @@ input[type="checkbox"] {
 *[disabled] + label {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.landing-page {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.left-side {
+  width: 50%;
+}
+
+.right-side {
+  width: 50%;
+  text-align: right;
+}
+
+.right-side img {
+  max-width: 100%;
+}
+
+.brown-backgrdound {
+  background-color: #4B3228;
 }
