@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { BrushPreview } from "./BrushPreview";
+import DropzoneComponent from "./DropzoneComponent";
 
 export const Toolbar = ({
   currentWidth,
@@ -25,8 +26,15 @@ export const Toolbar = ({
   isRegularMode,
   isAutoWidth,
   isEraser,
-
-  fetchImages
+  setIsLoading,
+  isLoading,
+  isOpen,
+  setIsOpen,
+  image,
+  fetchImages,
+  thumbs,
+  getRootProps,
+  getInputProps
 }) => {
 
 
@@ -150,7 +158,47 @@ export const Toolbar = ({
         )}
       </div>
       <div>
-        <button className="btn btn--main btn--block" onClick={fetchImages}>Fetch Images</button>
+
+        <DropzoneComponent thumbs={thumbs} getRootProps={getRootProps} getInputProps={getInputProps}></DropzoneComponent>
+
+        {/* <>
+          {isLoading ? (
+            <button disabled>Loading...</button>
+          ) : (
+            <button className="btn btn--main btn--block" onClick={() => {
+              setIsOpen(!isOpen);
+              if (!isLoading) fetchImages();
+            }}>Open Modal</button>
+          )}
+          {isOpen && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <img src={image} alt={"created image"} />
+                {/* <a href={} download>
+              Download
+            </a> 
+                <button onClick={() => setIsOpen(false)}>Close</button>
+              </div>
+            </div>
+          )}
+        </>*/}
+        <button className="btn btn--main btn--block" onClick={() => {
+          setIsOpen(!isOpen);
+          if (!isLoading) fetchImages();
+        }}>
+          {isOpen ? 'Close' : 'Open'} Drawer
+        </button>
+        {isOpen && (
+          <div className="image-drawer">
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              // <img src=${`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==`} alt="Red dot" />
+              <img src={image} alt={"created image"} />
+            )}
+          </div>
+        )}
+        {/* <button className="btn btn--main btn--block" onClick={fetchImages}>Fetch Images</button> */}
         <a
           className="btn btn--main btn--block"
           download="image.png"
