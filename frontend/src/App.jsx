@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Canvas } from "./components/Canvas";
 import { Goo } from "./components/Goo";
 import { Intro } from "./components/Intro";
@@ -7,27 +7,38 @@ import { usePainter } from "./hooks/usePainter";
 import axios from "axios"
 
 const App = () => {
-  const [dateUrl, setDataUrl] = useState("#");
-  const [{ canvas, isReady, ...state }, { init, ...api }] = usePainter();
+  const [dataUrl, setDataUrl] = useState("#");
+  const [{ canvas, isReady, ...state }, { init, ctx, ...api }] = usePainter();
   const [images, setImages] = useState([]);
+
+  console.log("context", ctx)
 
   const fetchImages = async () => {
     console.log("here")
+    console.log("inside fetch ctx", ctx)
 
-    // const { images } = axios.get("url")
-    // setImages(images)
+    // let canvasUrl = canvas.toDataURL("image/jpeg", 0.5);
 
-    // fetch("your_api_endpoint")
-    //   .then(response => response.json())
-    //   .then(data => setImages(data.images));
+    console.log(dataUrl);
+    try {
+      const response = await axios.post('http://172.28.169.136:5000/sketch', { search_image: dataUrl });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }    // setImages(images)
+
   };
+
+
   const handleDownload = useCallback(() => {
     if (!canvas || !canvas.current) return;
-
+    ctx.globalCompositeOperation = 'destination-over' // Add behind elements.
+    ctx.fillStyle = "#e5e7eb"; // light-gray
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     setDataUrl(canvas.current.toDataURL("image/png"));
   }, [canvas]);
 
-  const toolbarProps = { ...state, ...api, dateUrl, handleDownload };
+  const toolbarProps = { ...state, ...api, dataUrl, handleDownload };
 
   return (
     <>

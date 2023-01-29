@@ -8,7 +8,6 @@ export const Intro = ({ init, isReady }) => {
         <button onClick={init} className="blob-btn">
           <span style={{ "color": "black" }}>Start painting</span>
         </button>
-
       </div>
     </header>
   );

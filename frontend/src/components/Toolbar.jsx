@@ -12,7 +12,7 @@ export const Toolbar = ({
   currentWidth,
   currentColor,
   handleDownload,
-  dateUrl,
+  dataUrl,
   handleClear,
   handleSpecialMode,
   handleEraserMode,
@@ -155,7 +155,7 @@ export const Toolbar = ({
           className="btn btn--main btn--block"
           download="image.png"
           onClick={handleDownload}
-          href={dateUrl}
+          href={dataUrl}
         >
           Save Image
         </a>

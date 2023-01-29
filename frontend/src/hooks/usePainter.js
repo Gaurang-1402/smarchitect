@@ -23,7 +23,9 @@ export const usePainter = () => {
   const isRegularPaintMode = useRef(true);
   const isEraserMode = useRef(false);
 
-  const ctx = useRef(canvas?.current?.getContext("2d"));
+  let ctx = useRef(canvas?.current?.getContext("2d"));
+
+  console.log("ctx", ctx);
 
   const drawOnCanvas = useCallback((event) => {
     if (!ctx || !ctx.current) {
@@ -197,6 +199,7 @@ export const usePainter = () => {
       setAutoWidth,
       setCurrentSaturation,
       setCurrentLightness,
+      ctx
     },
   ];
 };
