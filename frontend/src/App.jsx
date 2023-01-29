@@ -142,14 +142,6 @@ const App = () => {
   );
 };
 
-function RightDrawer({ images }) {
-  return (
-    <div className="right-drawer">
-      {images.map((image, index) => (
-        <img key={index} src={image.url} alt={image.name} />
-      ))}
-    </div>
-  );
-}
+
 
 export default App;
