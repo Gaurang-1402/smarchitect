@@ -6,7 +6,6 @@ import { Toolbar } from "./components/Toolbar";
 import { usePainter } from "./hooks/usePainter";
 import axios from "axios"
 import { useDropzone } from "react-dropzone";
-import DropzoneComponent from "./components/DropzoneComponent";
 
 
 const App = () => {
@@ -17,7 +16,11 @@ const App = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
+  const handleChange = (event) => {
+    setInputValue(event.target.value);
+  };
   const fetchImages = async () => {
     setIsLoading(true);
     let canvasUrl = canvas.current.toDataURL("image/png")
@@ -32,7 +35,7 @@ const App = () => {
     // 'http://172.28.169.136:5000/sketch'
 
     const initImages = [
-      canvasUrl
+      dropzoneImages.length > 0 ? dropzoneImages[0].base64 : canvasUrl
     ]
     console.log("initImages", initImages
     )
@@ -46,7 +49,7 @@ const App = () => {
       "inpaint_full_res_padding": 0,
       "inpainting_mask_invert": 0,
       "initial_noise_multiplier": 0,
-      "prompt": "architecture",
+      "prompt": inputValue,
       "styles": [
         "concrete and metal",
         "architecture design",
@@ -120,7 +123,9 @@ const App = () => {
 
   const handleDownload = useCallback(() => {
     // if (!canvas || !canvas.current) return;
-
+    ctx.globalCompositeOperation = 'destination-over' // Add behind elements.
+    ctx.fillStyle = "#e5e7eb"; // light-gray
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     setDataUrl(canvas.current.toDataURL("image/png"));
   }, [canvas]);
 
@@ -151,7 +156,7 @@ const App = () => {
 
   const thumbs = dropzoneImages.map((file) => (
     <div key={file.name}>
-      <img style={{ "width": "10rem", "height": "10rem" }} key={file.name} src={file.preview} alt={file.name} />
+      <img style={{ "width": "5rem", "height": "5rem" }} key={file.name} src={file.preview} alt={file.name} />
     </div>
   ));
 
@@ -159,7 +164,7 @@ const App = () => {
   return (
     <>
       <Intro isReady={isReady} init={init} />
-      <Toolbar thumbs={thumbs} getRootProps={getRootProps} getInputProps={getInputProps} isOpen={isOpen} image={image} setIsOpen={setIsOpen} isLoading={isLoading} setIsLoading={setIsLoading} fetchImages={fetchImages} {...toolbarProps} />
+      <Toolbar handleChange={handleChange} inputValue={inputValue} thumbs={thumbs} getRootProps={getRootProps} getInputProps={getInputProps} isOpen={isOpen} image={image} setIsOpen={setIsOpen} isLoading={isLoading} setIsLoading={setIsLoading} fetchImages={fetchImages} {...toolbarProps} />
       <Canvas width={state.currentWidth} canvasRef={canvas} />
       <Goo />
 
