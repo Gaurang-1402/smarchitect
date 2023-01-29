@@ -5,24 +5,56 @@ import { Intro } from "./components/Intro";
 import { Toolbar } from "./components/Toolbar";
 import { usePainter } from "./hooks/usePainter";
 import axios from "axios"
+import { useDropzone } from "react-dropzone";
+import DropzoneComponent from "./components/DropzoneComponent";
+
 
 const App = () => {
-  const [dataUrl, setDataUrl] = useState("#");
+  const [dataUrl, setDataUrl] = useState("");
   const [{ canvas, isReady, ...state }, { init, ctx, ...api }] = usePainter();
   const [image, setImage] = useState([]);
+  const [dropzoneImages, setDropzoneImages] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const fetchImages = async () => {
     setIsLoading(true);
-    // let canvasUrl = canvas.toDataURL("image/jpeg", 0.5);
+    let canvasUrl = canvas.current.toDataURL("image/png")
+
+    console.log(canvasUrl)
+    if (dropzoneImages.length > 0) {
+      console.log("dropzoneImages[0]", dropzoneImages[0].base64)
+
+    }
+
     const url = "http://127.0.0.1:7860/sdapi/v1/txt2img";
     // 'http://172.28.169.136:5000/sketch'
     const payload = {
-      "prompt": "puppy dog",
-      "steps": 5
+      "init_images": [
+        dropzoneImages.length > 0 ? dropzoneImages[0].base64 : canvasUrl
+      ],
+      "mask": canvasUrl,
+      "prompt": "architecture hallway",
+      "styles": [
+        "concrete and metal",
+        "architecture design",
+        "cinematic",
+        "hyper-realistic",
+        "photo realistic",
+        "8k render"
+      ],
+      "seed": -1,
+      "subseed": -1,
+      "subseed_strength": 0,
+      "batch_size": 1,
+      "n_iter": 1,
+      "steps": 50,
+      "cfg_scale": 7,
+      "width": 512,
+      "height": 512,
+      "include_init_images": true,
     }
-
     try {
       // const data = await axios.post(url, { search_image: dataUrl });
       const { data } = await axios.post(url, { json: payload });
@@ -62,22 +94,50 @@ const App = () => {
   }
 
   const handleDownload = useCallback(() => {
-    if (!canvas || !canvas.current) return;
-    ctx.globalCompositeOperation = 'destination-over' // Add behind elements.
-    ctx.fillStyle = "#e5e7eb"; // light-gray
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // if (!canvas || !canvas.current) return;
+
     setDataUrl(canvas.current.toDataURL("image/png"));
   }, [canvas]);
 
   const toolbarProps = { ...state, ...api, dataUrl, handleDownload };
 
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: "image/*",
+    onDrop: async (acceptedFiles) => {
+      const imagePromises = acceptedFiles.map(async (file) => {
+        const fileReader = new FileReader();
+        return new Promise((resolve) => {
+          fileReader.onload = (e) => {
+            resolve({
+              file,
+              preview: URL.createObjectURL(file),
+              base64: e.target.result,
+            });
+          };
+          fileReader.readAsDataURL(file);
+        });
+      });
+
+      const imageData = await Promise.all(imagePromises);
+      setDropzoneImages(imageData);
+    },
+  });
+
+
+  const thumbs = dropzoneImages.map((file) => (
+    <div key={file.name}>
+      <img style={{ "width": "10rem", "height": "10rem" }} key={file.name} src={file.preview} alt={file.name} />
+    </div>
+  ));
+
+
   return (
     <>
       <Intro isReady={isReady} init={init} />
-      <Toolbar isOpen={isOpen} image={image} setIsOpen={setIsOpen} isLoading={isLoading} setIsLoading={setIsLoading} fetchImages={fetchImages} {...toolbarProps} />
+      <Toolbar thumbs={thumbs} getRootProps={getRootProps} getInputProps={getInputProps} isOpen={isOpen} image={image} setIsOpen={setIsOpen} isLoading={isLoading} setIsLoading={setIsLoading} fetchImages={fetchImages} {...toolbarProps} />
       <Canvas width={state.currentWidth} canvasRef={canvas} />
-
       <Goo />
+
     </>
   );
 };

@@ -50,7 +50,7 @@ input[type="range"] {
 }
 
 aside {
-  flex-basis: 196px;
+  flex-basis: 400px;
   background-color: #f1f1f1;
   padding: 1.2em;
   display: flex;
@@ -94,10 +94,26 @@ header {
   overflow-y: scroll;
 }
 
+
 .image-drawer img {
   width: 100%;
   height: auto;
   margin-bottom: 20px;
+}
+
+.dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+}
+
+.dropzone p {
+  margin: 10px 0;
+}
+
+.dropzone img {
+  width: 20%;
 }
 
 /* Style for the modal container */

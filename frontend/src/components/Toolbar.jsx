@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { BrushPreview } from "./BrushPreview";
+import DropzoneComponent from "./DropzoneComponent";
 
 export const Toolbar = ({
   currentWidth,
@@ -30,7 +31,10 @@ export const Toolbar = ({
   isOpen,
   setIsOpen,
   image,
-  fetchImages
+  fetchImages,
+  thumbs,
+  getRootProps,
+  getInputProps
 }) => {
 
 
@@ -154,6 +158,9 @@ export const Toolbar = ({
         )}
       </div>
       <div>
+
+        <DropzoneComponent thumbs={thumbs} getRootProps={getRootProps} getInputProps={getInputProps}></DropzoneComponent>
+
         {/* <>
           {isLoading ? (
             <button disabled>Loading...</button>
