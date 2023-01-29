@@ -1,11 +1,7 @@
 import React from "react";
 
-interface Props {
-  currentColor: string;
-  currentWidth: number;
-}
 
-export const BrushPreview: React.FC<Props> = ({
+export const BrushPreview = ({
   currentColor,
   currentWidth,
 }) => {

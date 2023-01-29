@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 
 export const usePainter = () => {
-  const canvas = useRef<HTMLCanvasElement>();
+  const canvas = useRef();
   const [isReady, setIsReady] = useState(false);
   const [isRegularMode, setIsRegularMode] = useState(true);
   const [isAutoWidth, setIsAutoWidth] = useState(false);
@@ -23,9 +23,11 @@ export const usePainter = () => {
   const isRegularPaintMode = useRef(true);
   const isEraserMode = useRef(false);
 
-  const ctx = useRef(canvas?.current?.getContext("2d"));
+  let ctx = useRef(canvas?.current?.getContext("2d"));
 
-  const drawOnCanvas = useCallback((event: any) => {
+  console.log("ctx", ctx);
+
+  const drawOnCanvas = useCallback((event) => {
     if (!ctx || !ctx.current) {
       return;
     }
@@ -37,7 +39,7 @@ export const usePainter = () => {
     [lastX.current, lastY.current] = [event.offsetX, event.offsetY];
   }, []);
 
-  const handleMouseDown = useCallback((e: any) => {
+  const handleMouseDown = useCallback((e) => {
     isDrawing.current = true;
     [lastX.current, lastY.current] = [e.offsetX, e.offsetY];
   }, []);
@@ -54,7 +56,7 @@ export const usePainter = () => {
   }, []);
 
   const drawNormal = useCallback(
-    (e: any) => {
+    (e) => {
       if (!isDrawing.current || !ctx.current) return;
 
       if (isRegularPaintMode.current || isEraserMode.current) {
@@ -126,12 +128,12 @@ export const usePainter = () => {
     isRegularPaintMode.current = false;
   }, []);
 
-  const handleColor = (e: any) => {
+  const handleColor = (e) => {
     setCurrentColor(e.currentTarget.value);
     selectedColor.current = e.currentTarget.value;
   };
 
-  const handleWidth = (e: any) => {
+  const handleWidth = (e) => {
     setCurrentWidth(e.currentTarget.value);
     selectedLineWidth.current = e.currentTarget.value;
   };
@@ -143,7 +145,7 @@ export const usePainter = () => {
     ctx.current.clearRect(0, 0, canvas.current.width, canvas.current.height);
   }, []);
 
-  const handleEraserMode = (e: any) => {
+  const handleEraserMode = (e) => {
     autoWidth.current = false;
     setIsAutoWidth(false);
     setIsRegularMode(true);
@@ -151,21 +153,21 @@ export const usePainter = () => {
     setIsEraser(true);
   };
 
-  const setCurrentSaturation = (e: any) => {
+  const setCurrentSaturation = (e) => {
     setCurrentColor(
       `hsl(${hue.current},${e.currentTarget.value}%,${selectedLightness.current}%)`,
     );
     selectedSaturation.current = e.currentTarget.value;
   };
 
-  const setCurrentLightness = (e: any) => {
+  const setCurrentLightness = (e) => {
     setCurrentColor(
       `hsl(${hue.current},${selectedSaturation.current}%,${e.currentTarget.value}%)`,
     );
     selectedLightness.current = e.currentTarget.value;
   };
 
-  const setAutoWidth = (e: any) => {
+  const setAutoWidth = (e) => {
     autoWidth.current = e.currentTarget.checked;
     setIsAutoWidth(e.currentTarget.checked);
 
@@ -197,6 +199,7 @@ export const usePainter = () => {
       setAutoWidth,
       setCurrentSaturation,
       setCurrentLightness,
+      ctx
     },
-  ] as any;
+  ];
 };
