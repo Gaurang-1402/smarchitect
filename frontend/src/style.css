@@ -123,14 +123,7 @@ h1 {
   font-size: 8rem;
   letter-spacing: -0.3rem;
   margin: 0 0 3rem;
-  background: linear-gradient(
-    90deg,
-    hsl(0, 100%, 50%),
-    hsl(211, 100%, 50%) 50%,
-    hsl(108, 100%, 40%)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
 }
 
 .blob-btn {
@@ -262,6 +255,44 @@ h1 {
   border-radius: 100%;
 }
 
+@keyframes colorShift {
+  0% {
+    color: hsl(0, 100%, 40%);
+  }
+  10% {
+    color: hsl(36, 100%, 40%);
+  }
+  20% {
+    color: hsl(72, 100%, 30%);
+  }
+  30% {
+    color: hsl(108, 100%, 30%);
+  }
+  40% {
+    color: hsl(144, 100%, 30%);
+  }
+  50% {
+    color: hsl(180, 100%, 20%);
+  }
+  60% {
+    color: hsl(211, 100%, 40%);
+  }
+  70% {
+    color: hsl(247, 100%, 40%);
+  }
+  80% {
+    color: hsl(277, 100%, 50%);
+  }
+  90% {
+    color: hsl(301, 100%, 40%);
+  }
+  100% {
+    color: hsl(320, 100%, 30%);
+  }
+  100% {
+    color: hsl(350, 100%, 40%);
+  }
+}
 
 @keyframes fadeOut {
   from {
@@ -349,7 +380,16 @@ input[type="checkbox"] {
 }
 
 .btn--dream-active {
-
+  background-image: repeating-conic-gradient(
+    hsl(0, 100%, 70%),
+    hsl(36, 100%, 70%),
+    hsl(108, 100%, 70%),
+    hsl(211, 100%, 70%),
+    hsl(247, 100%, 70%),
+    hsl(277, 100%, 70%),
+    hsl(320, 100%, 70%),
+    hsl(0, 100%, 70%)
+  );
 }
 
 .btn--eraser-active {
